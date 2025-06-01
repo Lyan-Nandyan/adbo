@@ -17,21 +17,23 @@ class ManagerAdapter extends TypeAdapter<Manager> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Manager(
-      nama: fields[0] as String,
-      password: fields[1] as String,
-      jabatan: fields[2] as String,
-    );
+      nama: fields[1] as String,
+      password: fields[2] as String,
+      jabatan: fields[3] as String,
+    )..id = fields[0] as String?;
   }
 
   @override
   void write(BinaryWriter writer, Manager obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.nama)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.password)
+      ..write(obj.nama)
       ..writeByte(2)
+      ..write(obj.password)
+      ..writeByte(3)
       ..write(obj.jabatan);
   }
 
