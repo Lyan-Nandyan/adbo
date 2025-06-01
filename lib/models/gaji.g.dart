@@ -6,24 +6,24 @@ part of 'gaji.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class KaryawanAdapter extends TypeAdapter<Karyawan> {
+class GajiAdapter extends TypeAdapter<Gaji> {
   @override
   final int typeId = 4;
 
   @override
-  Karyawan read(BinaryReader reader) {
+  Gaji read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Karyawan(
+    return Gaji(
       idKaryawan: fields[0] as String,
       gaji: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Karyawan obj) {
+  void write(BinaryWriter writer, Gaji obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -38,7 +38,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is KaryawanAdapter &&
+      other is GajiAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

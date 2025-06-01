@@ -6,24 +6,24 @@ part of 'penilaian.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class KaryawanAdapter extends TypeAdapter<Karyawan> {
+class PenilaianAdapter extends TypeAdapter<Penilaian> {
   @override
   final int typeId = 6;
 
   @override
-  Karyawan read(BinaryReader reader) {
+  Penilaian read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Karyawan(
+    return Penilaian(
       idKaryawan: fields[0] as String,
       score: fields[1] as double,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Karyawan obj) {
+  void write(BinaryWriter writer, Penilaian obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -38,7 +38,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is KaryawanAdapter &&
+      other is PenilaianAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

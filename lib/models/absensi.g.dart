@@ -6,17 +6,17 @@ part of 'absensi.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class KaryawanAdapter extends TypeAdapter<Karyawan> {
+class AbsensiAdapter extends TypeAdapter<Absensi> {
   @override
   final int typeId = 3;
 
   @override
-  Karyawan read(BinaryReader reader) {
+  Absensi read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Karyawan(
+    return Absensi(
       nama: fields[0] as String,
       idKaryawan: fields[1] as String,
       checkIn: fields[2] as DateTime?,
@@ -25,7 +25,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   }
 
   @override
-  void write(BinaryWriter writer, Karyawan obj) {
+  void write(BinaryWriter writer, Absensi obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is KaryawanAdapter &&
+      other is AbsensiAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
