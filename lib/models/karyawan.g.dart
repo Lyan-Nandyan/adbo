@@ -17,24 +17,26 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Karyawan(
-      nama: fields[0] as String,
-      password: fields[1] as String,
-      jabatan: fields[2] as String,
-      cuti: fields[3] as String?,
-    );
+      nama: fields[1] as String,
+      password: fields[2] as String,
+      jabatan: fields[3] as String,
+      cuti: fields[4] as String?,
+    )..id = fields[0] as String?;
   }
 
   @override
   void write(BinaryWriter writer, Karyawan obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.nama)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.password)
+      ..write(obj.nama)
       ..writeByte(2)
-      ..write(obj.jabatan)
+      ..write(obj.password)
       ..writeByte(3)
+      ..write(obj.jabatan)
+      ..writeByte(4)
       ..write(obj.cuti);
   }
 
