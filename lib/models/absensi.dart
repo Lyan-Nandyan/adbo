@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 part 'absensi.g.dart';
 
 @HiveType(typeId: 3)
-class Karyawan extends HiveObject {
+class Absensi extends HiveObject {
   @HiveField(0)
   final String nama;
 
@@ -15,7 +15,7 @@ class Karyawan extends HiveObject {
   @HiveField(3)
   final DateTime? checkOut;
 
-  Karyawan({
+  Absensi({
     required this.nama,
     required this.idKaryawan,
     this.checkIn,

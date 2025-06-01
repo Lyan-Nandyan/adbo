@@ -6,17 +6,17 @@ part of 'hrd.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class KaryawanAdapter extends TypeAdapter<Karyawan> {
+class HrdAdapter extends TypeAdapter<Hrd> {
   @override
   final int typeId = 1;
 
   @override
-  Karyawan read(BinaryReader reader) {
+  Hrd read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Karyawan(
+    return Hrd(
       nama: fields[0] as String,
       password: fields[1] as String,
       jabatan: fields[2] as String,
@@ -25,7 +25,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   }
 
   @override
-  void write(BinaryWriter writer, Karyawan obj) {
+  void write(BinaryWriter writer, Hrd obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class KaryawanAdapter extends TypeAdapter<Karyawan> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is KaryawanAdapter &&
+      other is HrdAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
