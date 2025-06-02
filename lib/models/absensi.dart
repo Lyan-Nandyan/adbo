@@ -10,15 +10,19 @@ class Absensi extends HiveObject {
   final String idKaryawan;
 
   @HiveField(2)
-  final DateTime? checkIn;
+  final String jabatan;
 
   @HiveField(3)
-  final DateTime? checkOut;
+  final DateTime? checkIn;
+
+  @HiveField(4)
+  DateTime? checkOut;
 
 
   Absensi({
     required this.nama,
     required this.idKaryawan,
+    required this.jabatan,
     this.checkIn,
     this.checkOut,
   });

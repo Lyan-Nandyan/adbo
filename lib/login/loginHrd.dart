@@ -86,7 +86,7 @@ class _LoginhrdState extends State<Loginhrd> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData && !snapshot.data!) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Login')),
+            appBar: AppBar(title: const Text('Login HRD')),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(

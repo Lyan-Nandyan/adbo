@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               onPressed: () {
                 // Aksi untuk masuk ke menu karyawan
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginKaryawan(),
@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               onPressed: () {
                 // Aksi untuk masuk ke menu karyawan
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Loginhrd(),
@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               onPressed: () {
                 // Aksi untuk masuk ke menu manager
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginManager(),

@@ -81,7 +81,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData && !snapshot.data!) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Login')),
+            appBar: AppBar(title: const Text('Login Karyawan')),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(

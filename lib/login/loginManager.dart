@@ -39,7 +39,7 @@ class _LoginManagerState extends State<LoginManager> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
         await prefs.setString('nama', _namaCtrl.text);
-        await prefs.setString('jabatan', loginManager.jabatan);
+        await prefs.setString('jabatan', "manager");
 
         ScaffoldMessenger.of(
           context,

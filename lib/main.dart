@@ -1,4 +1,5 @@
 import 'package:adbo/home.dart';
+import 'package:adbo/models/absensi.dart';
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/hrd.dart';
 import 'package:adbo/models/karyawan.dart';
@@ -23,6 +24,10 @@ void main() async {
 
   Hive.registerAdapter(ManagerAdapter());
   await Hive.openBox<Manager>(HiveBox.manager);
+
+  // absensi box
+  Hive.registerAdapter(AbsensiAdapter());
+  await Hive.openBox<Absensi>(HiveBox.absensi);
 
   runApp(const MyApp());
 }
