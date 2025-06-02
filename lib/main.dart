@@ -1,3 +1,5 @@
+
+import 'package:adbo/loginKaryawan.dart';
 import 'package:adbo/homeHrd.dart';
 import 'package:adbo/loginHrd.dart'; // Ganti ke loginHrd
 import 'package:adbo/home.dart';
@@ -9,16 +11,17 @@ import 'package:adbo/models/hrd.dart';
 import 'package:adbo/models/karyawan.dart';
 import 'package:adbo/models/manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:hive_flutter/adapters.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-
-  // Daftarkan adapter dan buka box
+  await SharedPreferences.getInstance();
+  // karyawan box
   Hive.registerAdapter(KaryawanAdapter());
   await Hive.openBox<Karyawan>(HiveBox.karyawan);
 
@@ -28,7 +31,6 @@ void main() async {
 
   Hive.registerAdapter(ManagerAdapter());
   await Hive.openBox<Manager>(HiveBox.manager);
-
 
   runApp(const MyApp());
 }
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+        //home: LoginKaryawan());
         home: LoginManager());
   }
 }
