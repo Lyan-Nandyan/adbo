@@ -15,6 +15,7 @@ class Absensi extends HiveObject {
   @HiveField(3)
   final DateTime? checkOut;
 
+
   Absensi({
     required this.nama,
     required this.idKaryawan,
