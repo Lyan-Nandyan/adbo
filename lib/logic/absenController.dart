@@ -67,6 +67,13 @@ class Absencontroller {
     }
   }
 
+  Future<bool> isAlreadyAbsen(String idKaryawan, String jabatan) async {
+    var box = Hive.box<Absensi>(HiveBox.absensi);
+    return box.values.any((absen) =>
+        absen.idKaryawan == idKaryawan && absen.checkOut == null &&
+        absen.jabatan == jabatan);
+  }
+
   Future<List<Absensi>> getAllAbsensi() async {
     var box = Hive.box<Absensi>(HiveBox.absensi);
     return box.values.toList();

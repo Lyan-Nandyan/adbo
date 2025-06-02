@@ -1,4 +1,6 @@
 import 'package:adbo/logic/absenController.dart';
+import 'package:adbo/menu/homeHrd.dart';
+import 'package:adbo/menu/homeKaryawan.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,17 +47,38 @@ class _TampilanabsensiState extends State<Tampilanabsensi> {
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _absenController.absenMasuk(context, id ?? '0',
-                    username ?? 'User', jabatan ?? 'karyawan');
+            FutureBuilder<bool> (
+              future: _absenController.isAlreadyAbsen(id ?? 'null', jabatan ?? 'null'),
+              builder: (context, snapshot) {
+                return snapshot.data == true
+                    ? SizedBox(height: 1)
+                    : ElevatedButton(
+                        onPressed: () async {
+                          _absenController.absenMasuk(context, id ?? '0',
+                              username ?? 'User', jabatan ?? 'karyawan');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  jabatan == 'karyawan' ? Homekaryawan() : HomeHrd(),
+                            ),
+                          );
+                        },
+                        child: const Text('Check In'),
+                      );
               },
-              child: const Text('Check In'),
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   _absenController.absenKeluar(context, id ?? '0',
                       username ?? 'User', jabatan ?? 'karyawan');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          jabatan == 'karyawan' ? Homekaryawan() : HomeHrd(),
+                    ),
+                  );
                 },
                 child: Text('Check Out')),
           ],

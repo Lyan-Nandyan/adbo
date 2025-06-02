@@ -1,3 +1,4 @@
+import 'package:adbo/fitur/tampilanAbsensi.dart';
 import 'package:adbo/login/loginKaryawan.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,10 +26,7 @@ class _HomeKaryawanState extends State<Homekaryawan> {
 
   Future<void> _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    await prefs.setBool('isLoggedIn', false);
-    await prefs.remove('jabatan');
-    await prefs.remove('id');
+    await prefs.clear();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginKaryawan()),
@@ -43,22 +41,38 @@ class _HomeKaryawanState extends State<Homekaryawan> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Menu Karyawan'),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: _logout,
-        ),
-      ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Selamat Datang, $username ($jabatan)',
-            style: const TextStyle(fontSize: 16.0),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Menu Karyawan'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
           ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50.0),
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Selamat Datang, $username ($jabatan)',
+              style: const TextStyle(fontSize: 16.0),
+            ),
+          ),
+        ),
+      ),
+      body: ElevatedButton.icon(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Tampilanabsensi(),
+              ));
+        },
+        icon: const Icon(Icons.access_time),
+        label: const Text('Absensi Karyawan'),
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(double.infinity, 50),
         ),
       ),
     );

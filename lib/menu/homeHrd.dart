@@ -1,3 +1,4 @@
+import 'package:adbo/fitur/tampilanAbsensi.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adbo/login/loginHrd.dart';
@@ -50,7 +51,9 @@ class HomeHrd extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            // Navigasi ke halaman Absensi Karyawan
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => const Tampilanabsensi(),
+                            ));
                           },
                           icon: const Icon(Icons.access_time),
                           label: const Text('Absensi Karyawan'),

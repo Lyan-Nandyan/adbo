@@ -17,14 +17,12 @@ void main() async {
   // karyawan box
   Hive.registerAdapter(KaryawanAdapter());
   await Hive.openBox<Karyawan>(HiveBox.karyawan);
-
-
+  // hrd box
   Hive.registerAdapter(HrdAdapter());
   await Hive.openBox<Hrd>(HiveBox.hrd);
-
+  // manager box
   Hive.registerAdapter(ManagerAdapter());
   await Hive.openBox<Manager>(HiveBox.manager);
-
   // absensi box
   Hive.registerAdapter(AbsensiAdapter());
   await Hive.openBox<Absensi>(HiveBox.absensi);
