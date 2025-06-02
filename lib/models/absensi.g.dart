@@ -19,22 +19,25 @@ class AbsensiAdapter extends TypeAdapter<Absensi> {
     return Absensi(
       nama: fields[0] as String,
       idKaryawan: fields[1] as String,
-      checkIn: fields[2] as DateTime?,
-      checkOut: fields[3] as DateTime?,
+      jabatan: fields[2] as String,
+      checkIn: fields[3] as DateTime?,
+      checkOut: fields[4] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Absensi obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.nama)
       ..writeByte(1)
       ..write(obj.idKaryawan)
       ..writeByte(2)
-      ..write(obj.checkIn)
+      ..write(obj.jabatan)
       ..writeByte(3)
+      ..write(obj.checkIn)
+      ..writeByte(4)
       ..write(obj.checkOut);
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:adbo/loginManager.dart';
+import 'package:adbo/login/loginManager.dart';
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/manager.dart';
 

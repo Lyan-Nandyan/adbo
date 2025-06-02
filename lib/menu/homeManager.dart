@@ -1,6 +1,6 @@
+import 'package:adbo/fitur/logAbsensi.dart';
 import 'package:flutter/material.dart';
-import 'package:adbo/loginManager.dart';
-import 'package:adbo/models/manager.dart';
+import 'package:adbo/login/loginManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeManager extends StatefulWidget {
@@ -52,9 +52,7 @@ class _HomeManagerState extends State<HomeManager> {
 
   Future<void> _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('nama');
-    await prefs.remove('jabatan');
-    await prefs.setBool('isLoggedIn', false);
+    await prefs.clear();
     
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginManager()),
@@ -156,7 +154,11 @@ class _HomeManagerState extends State<HomeManager> {
                     Icons.access_time,
                     Colors.green,
                     () {
-                      // Navigate to attendance management
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Logabsensi(),
+                      ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Kelola Absensi')),
                       );

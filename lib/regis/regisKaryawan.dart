@@ -1,57 +1,56 @@
+import 'package:adbo/login/loginKaryawan.dart';
+import 'package:adbo/models/boxes.dart';
+import 'package:adbo/models/karyawan.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:adbo/homeHrd.dart';
-import 'package:adbo/regisHrd.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/boxes.dart';
-import '../models/hrd.dart'; // <-- ganti import ke Hrd
+import 'package:hive/hive.dart';
 
-class Loginhrd extends StatefulWidget {
-  const Loginhrd({super.key});
+class RegisKaryawan extends StatefulWidget {
+  const RegisKaryawan({super.key});
 
   @override
-  State<Loginhrd> createState() => _LoginhrdState();
+  State<RegisKaryawan> createState() => _RegisKaryawanState();
 }
 
-class _LoginhrdState extends State<Loginhrd> {
-  final _formKey = GlobalKey<FormState>();
+class _RegisKaryawanState extends State<RegisKaryawan> {
   final _usernameCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  Future<void> _login() async {
+  Future<bool> registerUser(String username, String password) async {
+    var box = Hive.box<Karyawan>(HiveBox.karyawan);
+    bool exists = box.values.any((karyawan) => karyawan.nama == username);
+    if (exists) return false;
+    await box.add(Karyawan(
+        nama: username,
+        password: password,
+        jabatan: "karyawan",
+        cuti: "tidak"));
+    return true;
+  }
+
+  Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
-      Box<Hrd> hrdBox = Hive.box<Hrd>(HiveBox.hrd);
-
-      bool loginSuccess = hrdBox.values.any(
-        (hrd) =>
-            hrd.nama == _usernameCtrl.text &&
-            hrd.password == _passwordCtrl.text,
-      );
-
-      if (loginSuccess) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLoggedIn', true);
-        await prefs.setString('username', _usernameCtrl.text);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(
-          content: Text('Login Berhasil'),
-          backgroundColor: Colors.green,
-        ));
-
+      bool success = await registerUser(_usernameCtrl.text, _passwordCtrl.text);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Registrasi Berhasil Silahkan Login"),
+            backgroundColor: Colors.green,
+          ),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeHrd(),
+            builder: (context) => const LoginKaryawan(),
           ),
         );
       } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(
-          content: Text('username atau password salah'),
-          backgroundColor: Colors.red,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Usename Sudah Terdaftar"),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }
@@ -66,7 +65,7 @@ class _LoginhrdState extends State<Loginhrd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title: const Text('Register')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -95,17 +94,20 @@ class _LoginhrdState extends State<Loginhrd> {
                 },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: _login, child: const Text('Login')),
+              ElevatedButton(
+                onPressed: _register,
+                child: const Text('Register'),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Regishrd(),
+                      builder: (context) => const LoginKaryawan(),
                     ),
                   );
                 },
-                child: const Text('Don\'t have account? Register'),
+                child: const Text('Already have account? Login'),
               ),
             ],
           ),

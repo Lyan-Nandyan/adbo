@@ -1,7 +1,7 @@
-import 'package:adbo/menuKaryawan.dart';
+import 'package:adbo/menu/homeKaryawan.dart';
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/karyawan.dart';
-import 'package:adbo/regisKaryawan.dart';
+import 'package:adbo/regis/regisKaryawan.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +21,9 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
 
   Future<bool> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isLoggedIn') ?? false;
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    final jabatan = prefs.getString('jabatan');
+    return isLoggedIn && jabatan == "karyawan";
   }
 
   Future<void> _login() async {
@@ -49,7 +51,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MenuKaryawan(),
+            builder: (context) => const Homekaryawan(),
           ),
         );
       } else {
@@ -79,7 +81,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData && !snapshot.data!) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Login')),
+            appBar: AppBar(title: const Text('Login Karyawan')),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -129,7 +131,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
           return Navigator(
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => const MenuKaryawan(),
+                builder: (context) => const Homekaryawan(),
               );
             },
           );
