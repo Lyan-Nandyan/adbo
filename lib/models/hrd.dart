@@ -15,5 +15,9 @@ class Hrd extends HiveObject {
   @HiveField(3)
   final String email;
 
-  Hrd({required this.nama, required this.password, required this.jabatan, required this.email});
+  Hrd(
+      {required this.nama,
+      required this.password,
+      required this.jabatan,
+      required this.email});
 }
