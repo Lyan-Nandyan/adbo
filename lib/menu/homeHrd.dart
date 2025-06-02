@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:adbo/loginHrd.dart';
+import 'package:adbo/login/loginHrd.dart';
 
 class HomeHrd extends StatelessWidget {
   const HomeHrd({super.key});

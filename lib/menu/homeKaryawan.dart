@@ -1,15 +1,15 @@
-import 'package:adbo/loginKaryawan.dart';
+import 'package:adbo/login/loginKaryawan.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MenuKaryawan extends StatefulWidget {
-  const MenuKaryawan({super.key});
+class Homekaryawan extends StatefulWidget {
+  const Homekaryawan({super.key});
 
   @override
-  State<MenuKaryawan> createState() => _MenuKaryawanState();
+  State<Homekaryawan> createState() => _HomeKaryawanState();
 }
 
-class _MenuKaryawanState extends State<MenuKaryawan> {
+class _HomeKaryawanState extends State<Homekaryawan> {
   String? username;
   String? jabatan;
   String? id;

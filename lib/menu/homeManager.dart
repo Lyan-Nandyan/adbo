@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:adbo/loginManager.dart';
+import 'package:adbo/login/loginManager.dart';
 import 'package:adbo/models/manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

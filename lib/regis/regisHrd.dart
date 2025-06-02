@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:adbo/loginHrd.dart'; // folder sudah diganti
+import 'package:adbo/login/loginHrd.dart'; // folder sudah diganti
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/hrd.dart'; // ganti dari user.dart ke hrd.dart
 

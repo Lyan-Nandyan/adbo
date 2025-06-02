@@ -1,44 +1,46 @@
-import 'package:adbo/menuKaryawan.dart';
-import 'package:adbo/models/boxes.dart';
-import 'package:adbo/models/karyawan.dart';
-import 'package:adbo/regisKaryawan.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:adbo/menu/homeManager.dart';
+import 'package:adbo/regis/registerManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/boxes.dart';
+import '../../models/manager.dart';
 
-class LoginKaryawan extends StatefulWidget {
-  const LoginKaryawan({super.key});
-
+class LoginManager extends StatefulWidget {
+  const LoginManager({super.key});
   @override
-  State<LoginKaryawan> createState() => _LoginKaryawanState();
+  State<LoginManager> createState() => _LoginManagerState();
 }
 
-class _LoginKaryawanState extends State<LoginKaryawan> {
+class _LoginManagerState extends State<LoginManager> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameCtrl = TextEditingController();
+  final _namaCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
-  final String jabatan = "karyawan";
 
   Future<bool> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isLoggedIn') ?? false;
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    final jabatan = prefs.getString('jabatan');
+    return isLoggedIn && jabatan == "manager";
   }
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
-      Box<Karyawan> karyawanBox = Hive.box<Karyawan>(HiveBox.karyawan);
-      bool loginSuccess = karyawanBox.values.any(
-        (karyawan) =>
-            karyawan.nama == _usernameCtrl.text &&
-            karyawan.password == _passwordCtrl.text,
-      );
+      Box<Manager> managerBox = Hive.box<Manager>(HiveBox.manager);
+      Manager? loginManager = managerBox.values.cast<Manager?>().firstWhere(
+            (manager) =>
+                manager != null &&
+                manager.nama == _namaCtrl.text &&
+                manager.password == _passwordCtrl.text,
+            orElse: () => null,
+          );
 
-      if (loginSuccess) {
+      if (loginManager != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
-        await prefs.setString('username', _usernameCtrl.text);
-        await prefs.setString('jabatan', jabatan);
-        await prefs.setString('id', karyawanBox.values.firstWhere((karyawan) => karyawan.nama == _usernameCtrl.text).key.toString());
+        await prefs.setString('nama', _namaCtrl.text);
+        await prefs.setString('jabatan', loginManager.jabatan);
+
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(
@@ -49,14 +51,14 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MenuKaryawan(),
+            builder: (context) => const HomeManager(),
           ),
         );
       } else {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(
-          content: Text('username atau password salah'),
+          content: Text('Nama atau password salah'),
           backgroundColor: Colors.red,
         ));
       }
@@ -65,7 +67,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
 
   @override
   void dispose() {
-    _usernameCtrl.dispose();
+    _namaCtrl.dispose();
     _passwordCtrl.dispose();
     super.dispose();
   }
@@ -79,7 +81,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData && !snapshot.data!) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Login')),
+            appBar: AppBar(title: const Text('Login Manager')),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -87,11 +89,11 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _usernameCtrl,
-                      decoration: const InputDecoration(labelText: 'Username'),
+                      controller: _namaCtrl,
+                      decoration: const InputDecoration(labelText: 'Nama'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter username';
+                          return 'Please enter nama';
                         }
                         return null;
                       },
@@ -108,13 +110,14 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(onPressed: _login, child: const Text('Login')),
+                    ElevatedButton(
+                        onPressed: _login, child: const Text('Login')),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegisKaryawan(),
+                            builder: (context) => const RegisterManager(),
                           ),
                         );
                       },
@@ -129,7 +132,7 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
           return Navigator(
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => const MenuKaryawan(),
+                builder: (context) => const HomeManager(),
               );
             },
           );
