@@ -7,7 +7,7 @@ class Gaji extends HiveObject {
   final String idKaryawan;
 
   @HiveField(2)
-  final int gaji;
+  int gaji;
 
   Gaji({required this.idKaryawan, required this.gaji});
 }

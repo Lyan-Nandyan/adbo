@@ -16,9 +16,10 @@ class Karyawan extends HiveObject {
   final String jabatan;
 
   @HiveField(4)
-  final String? cuti;
+  String? cuti;
 
   Karyawan({
+    this.id,
     required this.nama,
     required this.password,
     required this.jabatan,

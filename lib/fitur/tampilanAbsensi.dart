@@ -47,8 +47,9 @@ class _TampilanabsensiState extends State<Tampilanabsensi> {
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 20),
-            FutureBuilder<bool> (
-              future: _absenController.isAlreadyAbsen(id ?? 'null', jabatan ?? 'null'),
+            FutureBuilder<bool>(
+              future: _absenController.isAlreadyAbsen(
+                  id ?? 'null', jabatan ?? 'null'),
               builder: (context, snapshot) {
                 return snapshot.data == true
                     ? SizedBox(height: 1)
@@ -59,8 +60,9 @@ class _TampilanabsensiState extends State<Tampilanabsensi> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  jabatan == 'karyawan' ? Homekaryawan() : HomeHrd(),
+                              builder: (context) => jabatan == 'karyawan'
+                                  ? Homekaryawan()
+                                  : HomeHrd(),
                             ),
                           );
                         },

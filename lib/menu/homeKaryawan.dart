@@ -1,3 +1,5 @@
+import 'package:adbo/fitur/pengajuanCuti.dart';
+import 'package:adbo/fitur/profileKaryawan.dart';
 import 'package:adbo/fitur/tampilanAbsensi.dart';
 import 'package:adbo/login/loginKaryawan.dart';
 import 'package:flutter/material.dart';
@@ -42,39 +44,72 @@ class _HomeKaryawanState extends State<Homekaryawan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Menu Karyawan'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _logout,
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50.0),
-          child: Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Selamat Datang, $username ($jabatan)',
-              style: const TextStyle(fontSize: 16.0),
+        appBar: AppBar(
+          title: Text('Menu Karyawan'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: _logout,
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50.0),
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Selamat Datang, $username ($jabatan)',
+                style: const TextStyle(fontSize: 16.0),
+              ),
             ),
           ),
         ),
-      ),
-      body: ElevatedButton.icon(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Tampilanabsensi(),
-              ));
-        },
-        icon: const Icon(Icons.access_time),
-        label: const Text('Absensi Karyawan'),
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, 50),
-        ),
-      ),
-    );
+        body: Column(
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Profilekaryawan(),
+                    ));
+              },
+              icon: const Icon(Icons.person),
+              label: const Text('Profile Karyawan'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Pengajuancuti(),
+                    ));
+              },
+              icon: const Icon(Icons.request_page),
+              label: const Text('Pengajuan Cuti'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Tampilanabsensi(),
+                    ));
+              },
+              icon: const Icon(Icons.access_time),
+              label: const Text('Absensi Karyawan'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+            ),
+          ],
+        ));
   }
 }
