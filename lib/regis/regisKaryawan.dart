@@ -18,13 +18,19 @@ class _RegisKaryawanState extends State<RegisKaryawan> {
 
   Future<bool> registerUser(String username, String password) async {
     var box = Hive.box<Karyawan>(HiveBox.karyawan);
+
     bool exists = box.values.any((karyawan) => karyawan.nama == username);
     if (exists) return false;
-    await box.add(Karyawan(
+    int key = await box.add(Karyawan(
         nama: username,
         password: password,
         jabatan: "karyawan",
         cuti: "tidak"));
+    Karyawan? newKaryawan = box.get(key);
+    if (newKaryawan != null) {
+      newKaryawan.id = key.toString(); // Simpan key sebagai id
+      await newKaryawan.save(); // Simpan perubahan
+    }
     return true;
   }
 

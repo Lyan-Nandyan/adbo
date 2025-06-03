@@ -22,8 +22,13 @@ class _RegishrdState extends State<Regishrd> {
     var box = Hive.box<Hrd>(HiveBox.hrd); // ganti User ke Hrd dan HiveBox.hrd
     bool exists = box.values.any((hrd) => hrd.nama == username);
     if (exists) return false;
-    await box.add(
+    int key = await box.add(
         Hrd(nama: username, password: password, jabatan: "bos", email: email));
+    Hrd? newHrd = box.get(key);
+    if (newHrd != null) {
+      newHrd.id = key.toString(); // Simpan key sebagai id
+      await newHrd.save(); // Simpan perubahan
+    }
     return true;
   }
 

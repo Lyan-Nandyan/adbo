@@ -35,8 +35,9 @@ class _RegisterManagerState extends State<RegisterManager> {
       
       // Tambahkan manager baru
       Manager newManager = Manager(nama: nama, password: password, jabatan: "Manager");
-      await box.add(newManager);
-      
+      int key = await box.add(newManager);
+      newManager.id = key.toString(); // Simpan key sebagai id
+      await newManager.save(); // Simpan perubahan
       print('Manager berhasil ditambahkan: $nama'); // Debug log
       return true;
     } catch (e) {
