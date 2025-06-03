@@ -118,7 +118,7 @@ class _ProfilekaryawanState extends State<Profilekaryawan> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          _karyawan?.jabatan?.toUpperCase() ?? 'JABATAN',
+                          _karyawan?.jabatan.toUpperCase() ?? 'JABATAN',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade600,
