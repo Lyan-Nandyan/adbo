@@ -51,9 +51,11 @@ class HomeHrd extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => const Tampilanabsensi(),
-                            ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Tampilanabsensi(),
+                                ));
                           },
                           icon: const Icon(Icons.access_time),
                           label: const Text('Absensi Karyawan'),

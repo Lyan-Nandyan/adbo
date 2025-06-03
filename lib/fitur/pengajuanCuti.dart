@@ -1,6 +1,9 @@
 import 'package:adbo/logic/cutiController.dart';
 import 'package:adbo/menu/homeKaryawan.dart';
+import 'package:adbo/models/boxes.dart';
+import 'package:adbo/models/cuti.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Pengajuancuti extends StatefulWidget {
@@ -22,6 +25,10 @@ class _PengajuancutiState extends State<Pengajuancuti> {
   String? username;
   String? jabatan;
   String? id;
+  String? cuti;
+  String? mulai;
+  String? selesai;
+  String? alasan;
 
   Future<void> _loadUserKaryawan() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,6 +36,17 @@ class _PengajuancutiState extends State<Pengajuancuti> {
       username = prefs.getString('username') ?? 'User';
       jabatan = prefs.getString('jabatan') ?? 'karyawan';
       id = prefs.getString('id') ?? '0';
+    });
+    var box = Hive.box<Cuti>(HiveBox.cuti);
+    Cuti? cutiData = box.values.firstWhere(
+      (c) =>
+          c.idKaryawan == id && c.jabatan == jabatan && c.status == 'Pending',
+    );
+    setState(() {
+      cuti = cutiData.status;
+      mulai = cutiData.mulai.toString();
+      selesai = cutiData.selesai.toString();
+      alasan = cutiData.alasan;
     });
   }
 
@@ -66,7 +84,20 @@ class _PengajuancutiState extends State<Pengajuancuti> {
                 }
 
                 if (snapshot.data == true) {
-                  return const Text('Anda sudah mengajukan cuti.');
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Anda sudah mengajukan cuti.'),
+                        SizedBox(height: 20),
+                        Text('Status Cuti: $cuti'),
+                        SizedBox(height: 10),
+                        Text('Tanggal Mulai: $mulai'),
+                        SizedBox(height: 10),
+                        Text('Tanggal Selesai: $selesai'),
+                        SizedBox(height: 20),
+                        Text('alasan: $alasan'),
+                      ]);
                 }
 
                 // Jika belum mengajukan cuti

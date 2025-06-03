@@ -82,9 +82,11 @@ class _HomeKaryawanState extends State<Homekaryawan> {
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Pengajuancuti(),
-                ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Pengajuancuti(),
+                    ));
               },
               icon: const Icon(Icons.request_page),
               label: const Text('Pengajuan Cuti'),

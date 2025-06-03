@@ -30,18 +30,14 @@ class _ProfilekaryawanState extends State<Profilekaryawan> {
     var box = Hive.box<Karyawan>(HiveBox.karyawan);
     // Menggunakan firstWhereOrNull agar tidak error jika tidak ditemukan
     Karyawan karyawan = box.values.firstWhere(
-      (k) => k.key.toString() == id && k.nama == username && k.jabatan == jabatan,
+      (k) => k.id == id && k.nama == username && k.jabatan == jabatan,
     );
     debugPrint(
         'karyawan: ${karyawan.id}, ${karyawan.nama}, ${karyawan.jabatan}');
-    if (karyawan != null) {
-      debugPrint('User ditemukan: ${karyawan.nama} - ${karyawan.jabatan}');
-      setState(() {
-        _karyawan = karyawan;
-      });
-    } else {
-      debugPrint('User tidak ditemukan di Hive.');
-    }
+    debugPrint('User ditemukan: ${karyawan.nama} - ${karyawan.jabatan}');
+    setState(() {
+      _karyawan = karyawan;
+    });
   }
 
   @override

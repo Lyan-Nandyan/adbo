@@ -1,3 +1,4 @@
+import 'package:adbo/fitur/listPengajuanCuti.dart';
 import 'package:adbo/fitur/logAbsensi.dart';
 import 'package:flutter/material.dart';
 import 'package:adbo/login/loginManager.dart';
@@ -20,7 +21,7 @@ class _HomeManagerState extends State<HomeManager> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool loginStatus = prefs.getBool('isLoggedIn') ?? false;
     String? savedNama = prefs.getString('nama');
-    
+
     // Jika tidak login atau tidak ada nama, redirect ke login
     if (!loginStatus || savedNama == null || savedNama.isEmpty) {
       _redirectToLogin();
@@ -41,7 +42,7 @@ class _HomeManagerState extends State<HomeManager> {
     await prefs.remove('nama');
     await prefs.remove('jabatan');
     await prefs.setBool('isLoggedIn', false);
-    
+
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginManager()),
@@ -53,7 +54,7 @@ class _HomeManagerState extends State<HomeManager> {
   Future<void> _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    
+
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginManager()),
       (route) => false,
@@ -155,10 +156,10 @@ class _HomeManagerState extends State<HomeManager> {
                     Colors.green,
                     () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Logabsensi(),
-                      ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Logabsensi(),
+                          ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Kelola Absensi')),
                       );
@@ -170,7 +171,11 @@ class _HomeManagerState extends State<HomeManager> {
                     Icons.calendar_today,
                     Colors.orange,
                     () {
-                      // Navigate to leave management
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Listpengajuancuti(),
+                          ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Kelola Cuti')),
                       );

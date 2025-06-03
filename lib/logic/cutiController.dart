@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/cuti.dart';
 import 'package:adbo/models/karyawan.dart';
@@ -16,7 +14,7 @@ class CutiController {
     String alasan,
   ) async {
     var box = Hive.box<Cuti>(HiveBox.cuti);
-    await box.add(Cuti(
+    int key = await box.add(Cuti(
       nama: nama,
       idKaryawan: idKaryawan,
       jabatan: jabatan,
@@ -25,66 +23,60 @@ class CutiController {
       alasan: alasan,
       status: 'Pending', // Status awal cuti
     ));
+    Cuti? cuti = box.get(key);
+    if (cuti != null) {
+      cuti.id = key.toString(); // Simpan key sebagai id
+      await cuti.save(); // Simpan perubahan
+    }
     debugPrint(
         'Cuti diajukan - ID: $idKaryawan, Nama: $nama, Jabatan: $jabatan, Mulai: $tanggalMulai, Selesai: $tanggalSelesai, Alasan: $alasan');
     var boxKaryawan = Hive.box<Karyawan>(HiveBox.karyawan);
     Karyawan? karyawan = boxKaryawan.values.firstWhere(
       (k) => k.id == idKaryawan && k.jabatan == jabatan,
     );
-    if (karyawan != null) {
-      karyawan.cuti =
-          '[Menunggu persetujuan], cuti telah diajukan mulai dari ${tanggalMulai.toLocal().toIso8601String()} hingga ${tanggalSelesai.toLocal().toIso8601String()} dengan alasan: $alasan';
-      await karyawan.save();
-    } else {
-      debugPrint(
-          'Karyawan dengan ID $idKaryawan dan jabatan $jabatan tidak ditemukan.');
-    }
+    karyawan.cuti = '[Menunggu persetujuan]';
+    await karyawan.save();
   }
 
   Future<void> setujuiCuti(String cutiId) async {
-    var box = Hive.box<Cuti>(HiveBox.cuti);
-    Cuti? cuti = box.get(cutiId);
+    debugPrint('Menyetujui cuti dengan ID: $cutiId');
 
-    if (cuti != null) {
-      cuti.status = 'Disetujui';
-      await cuti.save();
-    }
+    var box = Hive.box<Cuti>(HiveBox.cuti);
+    Cuti? cuti = box.values.firstWhere(
+      (c) => c.id == cutiId,
+    );
+    cuti.status = 'Disetujui';
+    await cuti.save();
 
     var boxKaryawan = Hive.box<Karyawan>(HiveBox.karyawan);
     Karyawan? karyawan = boxKaryawan.values.firstWhere(
-      (k) => k.id == cuti?.idKaryawan && k.jabatan == cuti?.jabatan,
-      orElse: () => Karyawan(
-          nama: cuti?.nama ?? '', password: '', jabatan: cuti?.jabatan ?? ''),
+      (k) => k.id == cuti.idKaryawan && k.jabatan == cuti.jabatan,
+      orElse: () =>
+          Karyawan(nama: cuti.nama, password: '', jabatan: cuti.jabatan),
     );
-    if (karyawan != null) {
-      karyawan.cuti =
-          '[Disetujui], cuti telah disetujui mulai dari ${cuti?.mulai?.toLocal().toIso8601String()} hingga ${cuti?.selesai?.toLocal().toIso8601String()} dengan alasan: ${cuti?.alasan}';
-      // Simpan perubahan pada karyawan
-      await karyawan.save();
-    }
+    karyawan.cuti = 'Tidak ada(sedang cuti)';
+    // Simpan perubahan pada karyawan
+    await karyawan.save();
   }
 
   Future<void> tolakCuti(String cutiId) async {
     var box = Hive.box<Cuti>(HiveBox.cuti);
-    Cuti? cuti = box.get(cutiId);
+    Cuti? cuti = box.values.firstWhere(
+      (c) => c.id == cutiId,
+    );
 
-    if (cuti != null) {
-      cuti.status =
-          '[Ditolak], pengajuan cuti Anda dari ${cuti.mulai?.toLocal().toIso8601String()} hingga ${cuti.selesai?.toLocal().toIso8601String()} dengan alasan: ${cuti.alasan} telah ditolak';
-      await cuti.save();
-    }
+    cuti.status = 'Ditolak';
+    await cuti.save();
 
     var boxKaryawan = Hive.box<Karyawan>(HiveBox.karyawan);
     Karyawan? karyawan = boxKaryawan.values.firstWhere(
-      (k) => k.id == cuti?.idKaryawan && k.jabatan == cuti?.jabatan,
-      orElse: () => Karyawan(
-          nama: cuti?.nama ?? '', password: '', jabatan: cuti?.jabatan ?? ''),
+      (k) => k.id == cuti.idKaryawan && k.jabatan == cuti.jabatan,
+      orElse: () =>
+          Karyawan(nama: cuti.nama, password: '', jabatan: cuti.jabatan),
     );
-    if (karyawan != null) {
-      karyawan.cuti = 'Tidak ada';
-      // Simpan perubahan pada karyawan
-      await karyawan.save();
-    }
+    karyawan.cuti = 'Tidak ada';
+    // Simpan perubahan pada karyawan
+    await karyawan.save();
   }
 
   Future<List<Cuti>> getCutiByKaryawan(String idKaryawan) async {

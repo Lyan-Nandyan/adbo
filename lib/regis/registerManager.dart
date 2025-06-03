@@ -26,15 +26,16 @@ class _RegisterManagerState extends State<RegisterManager> {
       } else {
         box = await Hive.openBox<Manager>(HiveBox.manager);
       }
-      
+
       // Cek apakah nama sudah ada
       bool exists = box.values.any((manager) => manager.nama == nama);
       if (exists) {
         return false;
       }
-      
+
       // Tambahkan manager baru
-      Manager newManager = Manager(nama: nama, password: password, jabatan: "Manager");
+      Manager newManager =
+          Manager(nama: nama, password: password, jabatan: "Manager");
       int key = await box.add(newManager);
       newManager.id = key.toString(); // Simpan key sebagai id
       await newManager.save(); // Simpan perubahan
@@ -54,10 +55,10 @@ class _RegisterManagerState extends State<RegisterManager> {
 
       try {
         bool success = await registerManager(
-          _namaCtrl.text.trim(), 
-          _passwordCtrl.text.trim(), 
+          _namaCtrl.text.trim(),
+          _passwordCtrl.text.trim(),
         );
-        
+
         if (success) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -67,12 +68,11 @@ class _RegisterManagerState extends State<RegisterManager> {
                 duration: Duration(seconds: 2),
               ),
             );
-            
+
             // Clear form
             _namaCtrl.clear();
             _passwordCtrl.clear();
-            
-            
+
             // Navigate to login
             Navigator.pushReplacement(
               context,
@@ -178,7 +178,6 @@ class _RegisterManagerState extends State<RegisterManager> {
                 },
               ),
               const SizedBox(height: 16),
-              
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -194,12 +193,14 @@ class _RegisterManagerState extends State<RegisterManager> {
                           width: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
                       : const Text(
                           'DAFTAR',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                 ),
               ),
@@ -209,14 +210,16 @@ class _RegisterManagerState extends State<RegisterManager> {
                 children: [
                   const Text('Sudah punya akun? '),
                   TextButton(
-                    onPressed: _isLoading ? null : () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginManager(),
-                        ),
-                      );
-                    },
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginManager(),
+                              ),
+                            );
+                          },
                     child: const Text(
                       'Login di sini',
                       style: TextStyle(fontWeight: FontWeight.bold),

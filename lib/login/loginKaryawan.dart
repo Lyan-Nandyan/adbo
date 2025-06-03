@@ -40,7 +40,12 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
         await prefs.setBool('isLoggedIn', true);
         await prefs.setString('username', _usernameCtrl.text);
         await prefs.setString('jabatan', jabatan);
-        await prefs.setString('id', karyawanBox.values.firstWhere((karyawan) => karyawan.nama == _usernameCtrl.text).key.toString());
+        await prefs.setString(
+            'id',
+            karyawanBox.values
+                .firstWhere((karyawan) => karyawan.nama == _usernameCtrl.text)
+                .key
+                .toString());
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(
@@ -110,7 +115,8 @@ class _LoginKaryawanState extends State<LoginKaryawan> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(onPressed: _login, child: const Text('Login')),
+                    ElevatedButton(
+                        onPressed: _login, child: const Text('Login')),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
