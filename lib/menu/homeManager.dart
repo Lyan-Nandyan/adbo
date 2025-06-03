@@ -1,3 +1,4 @@
+import 'package:adbo/fitur/listKaryawan.dart';
 import 'package:adbo/fitur/listPengajuanCuti.dart';
 import 'package:adbo/fitur/logAbsensi.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +200,11 @@ class _HomeManagerState extends State<HomeManager> {
                     Icons.star_rate,
                     Colors.red,
                     () {
-                      // Navigate to evaluation
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Listkaryawan(),
+                          ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Penilaian')),
                       );
