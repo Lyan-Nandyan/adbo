@@ -21,6 +21,8 @@ class _LogabsensiState extends State<Logabsensi> {
 
   void _loadAbsensi() async {
     List<Absensi> data = await _absenController.getAllAbsensi();
+    data.sort((a, b) => (b.checkIn ?? DateTime(0))
+        .compareTo(a.checkIn ?? DateTime(0))); // Sort by check-in time descending
     setState(() {
       _absensiList = data;
     });

@@ -5,6 +5,7 @@ import 'package:adbo/models/cuti.dart';
 import 'package:adbo/models/hrd.dart';
 import 'package:adbo/models/karyawan.dart';
 import 'package:adbo/models/manager.dart';
+import 'package:adbo/models/penilaian.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,9 @@ void main() async {
   // cuti box
   Hive.registerAdapter(CutiAdapter());
   await Hive.openBox<Cuti>(HiveBox.cuti);
+  // penilaian box
+  Hive.registerAdapter(PenilaianAdapter());
+  await Hive.openBox<Penilaian>(HiveBox.penilaian);
 
   runApp(const MyApp());
 }

@@ -19,17 +19,20 @@ class PenilaianAdapter extends TypeAdapter<Penilaian> {
     return Penilaian(
       idKaryawan: fields[0] as String,
       score: fields[1] as double,
+      tanggal: fields[2] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Penilaian obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.idKaryawan)
       ..writeByte(1)
-      ..write(obj.score);
+      ..write(obj.score)
+      ..writeByte(2)
+      ..write(obj.tanggal);
   }
 
   @override

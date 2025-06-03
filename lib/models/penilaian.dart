@@ -9,5 +9,8 @@ class Penilaian extends HiveObject {
   @HiveField(1)
   final double score;
 
-  Penilaian({required this.idKaryawan, required this.score});
+  @HiveField(2)
+  final DateTime? tanggal;
+
+  Penilaian({required this.idKaryawan, required this.score, required this.tanggal});
 }
