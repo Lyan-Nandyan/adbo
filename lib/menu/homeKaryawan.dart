@@ -1,5 +1,6 @@
 import 'package:adbo/fitur/pengajuanCuti.dart';
 import 'package:adbo/fitur/profileKaryawan.dart';
+import 'package:adbo/fitur/riwayat_gaji_karyawan.dart';
 import 'package:adbo/fitur/tampilanAbsensi.dart';
 import 'package:adbo/login/loginKaryawan.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,6 @@ class _HomeKaryawanState extends State<Homekaryawan> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Welcome Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -119,8 +119,6 @@ class _HomeKaryawanState extends State<Homekaryawan> {
               ),
             ),
             const SizedBox(height: 30),
-
-            // Menu Options
             _buildMenuCard(
               icon: Icons.person_rounded,
               title: 'Profile Karyawan',
@@ -135,7 +133,6 @@ class _HomeKaryawanState extends State<Homekaryawan> {
               },
             ),
             const SizedBox(height: 16),
-
             _buildMenuCard(
               icon: Icons.request_page_rounded,
               title: 'Pengajuan Cuti',
@@ -150,7 +147,6 @@ class _HomeKaryawanState extends State<Homekaryawan> {
               },
             ),
             const SizedBox(height: 16),
-
             _buildMenuCard(
               icon: Icons.access_time_rounded,
               title: 'Absensi Karyawan',
@@ -160,6 +156,20 @@ class _HomeKaryawanState extends State<Homekaryawan> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const Tampilanabsensi(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            _buildMenuCard(
+              icon: Icons.wallet_rounded,
+              title: 'Riwayat Gaji',
+              color: const Color(0xFF6366F1),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RiwayatGajiKaryawan(),
                   ),
                 );
               },

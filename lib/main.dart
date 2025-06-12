@@ -1,38 +1,41 @@
-import 'package:adbo/home.dart';
 import 'package:adbo/models/absensi.dart';
 import 'package:adbo/models/boxes.dart';
 import 'package:adbo/models/cuti.dart';
+import 'package:adbo/models/gaji.dart';
 import 'package:adbo/models/hrd.dart';
 import 'package:adbo/models/karyawan.dart';
 import 'package:adbo/models/manager.dart';
 import 'package:adbo/models/penilaian.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:adbo/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart'; // <-- 1. TAMBAHKAN IMPORT INI
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inisialisasi format tanggal untuk locale Indonesia
+  await initializeDateFormatting('id_ID', null); // <-- 2. TAMBAHKAN BARIS INI
+
   await Hive.initFlutter();
-  await SharedPreferences.getInstance();
-  // karyawan box
+
+  // Mendaftarkan semua adapter
   Hive.registerAdapter(KaryawanAdapter());
-  await Hive.openBox<Karyawan>(HiveBox.karyawan);
-  // hrd box
   Hive.registerAdapter(HrdAdapter());
-  await Hive.openBox<Hrd>(HiveBox.hrd);
-  // manager box
   Hive.registerAdapter(ManagerAdapter());
-  await Hive.openBox<Manager>(HiveBox.manager);
-  // absensi box
   Hive.registerAdapter(AbsensiAdapter());
-  await Hive.openBox<Absensi>(HiveBox.absensi);
-  // cuti box
   Hive.registerAdapter(CutiAdapter());
-  await Hive.openBox<Cuti>(HiveBox.cuti);
-  // penilaian box
   Hive.registerAdapter(PenilaianAdapter());
+  Hive.registerAdapter(GajiAdapter());
+
+  // Membuka semua box
+  await Hive.openBox<Karyawan>(HiveBox.karyawan);
+  await Hive.openBox<Hrd>(HiveBox.hrd);
+  await Hive.openBox<Manager>(HiveBox.manager);
+  await Hive.openBox<Absensi>(HiveBox.absensi);
+  await Hive.openBox<Cuti>(HiveBox.cuti);
   await Hive.openBox<Penilaian>(HiveBox.penilaian);
+  await Hive.openBox<Gaji>(HiveBox.gaji);
 
   runApp(const MyApp());
 }
@@ -42,12 +45,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: Home());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Home(),
+    );
   }
 }

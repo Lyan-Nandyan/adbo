@@ -2,6 +2,7 @@ import 'package:adbo/fitur/tampilanAbsensi.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adbo/login/loginHrd.dart';
+import 'package:adbo/fitur/manajemen_gaji_hrd.dart';
 
 class HomeHrd extends StatelessWidget {
   const HomeHrd({super.key});
@@ -103,7 +104,13 @@ class HomeHrd extends StatelessWidget {
                             title: 'Gaji Karyawan',
                             color: const Color(0xFF10B981),
                             onTap: () {
-                              // Navigasi ke halaman gaji
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ManajemenGajiHrd(),
+                                ),
+                              );
                             },
                           ),
                         ],
