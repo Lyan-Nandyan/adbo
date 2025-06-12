@@ -18,18 +18,21 @@ class GajiAdapter extends TypeAdapter<Gaji> {
     };
     return Gaji(
       idKaryawan: fields[0] as String,
-      gaji: fields[2] as int,
+      jumlah: fields[1] as int,
+      periode: fields[2] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Gaji obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.idKaryawan)
+      ..writeByte(1)
+      ..write(obj.jumlah)
       ..writeByte(2)
-      ..write(obj.gaji);
+      ..write(obj.periode);
   }
 
   @override

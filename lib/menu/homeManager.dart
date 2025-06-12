@@ -1,3 +1,4 @@
+import 'package:adbo/fitur/laporan_gaji_manajer.dart';
 import 'package:adbo/fitur/listKaryawan.dart';
 import 'package:adbo/fitur/listPengajuanCuti.dart';
 import 'package:adbo/fitur/logAbsensi.dart';
@@ -23,7 +24,6 @@ class _HomeManagerState extends State<HomeManager> {
     bool loginStatus = prefs.getBool('isLoggedIn') ?? false;
     String? savedNama = prefs.getString('nama');
 
-    // Jika tidak login atau tidak ada nama, redirect ke login
     if (!loginStatus || savedNama == null || savedNama.isEmpty) {
       _redirectToLogin();
       return;
@@ -38,7 +38,6 @@ class _HomeManagerState extends State<HomeManager> {
   }
 
   Future<void> _redirectToLogin() async {
-    // Clear semua data dan redirect ke login
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('nama');
     await prefs.remove('jabatan');
@@ -70,7 +69,6 @@ class _HomeManagerState extends State<HomeManager> {
 
   @override
   Widget build(BuildContext context) {
-    // Tampilkan loading saat mengecek status login
     if (isLoading) {
       return const Scaffold(
         body: Center(
@@ -79,7 +77,6 @@ class _HomeManagerState extends State<HomeManager> {
       );
     }
 
-    // Jika belum login, tampilkan halaman kosong (redirect sudah terjadi)
     if (!isLoggedIn) {
       return const Scaffold(
         body: Center(
@@ -108,7 +105,7 @@ class _HomeManagerState extends State<HomeManager> {
             tooltip: 'Logout',
           ),
         ],
-        automaticallyImplyLeading: false, // Hilangkan back button
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -144,7 +141,6 @@ class _HomeManagerState extends State<HomeManager> {
                     Icons.people,
                     Colors.blue,
                     () {
-                      // Navigate to employee management
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Kelola Karyawan')),
                       );
@@ -184,13 +180,15 @@ class _HomeManagerState extends State<HomeManager> {
                   ),
                   _buildMenuCard(
                     context,
-                    'Kelola Gaji',
+                    'Laporan Gaji',
                     Icons.attach_money,
                     Colors.purple,
                     () {
-                      // Navigate to salary management
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Kelola Gaji')),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LaporanGajiManager(),
+                        ),
                       );
                     },
                   ),
@@ -216,7 +214,6 @@ class _HomeManagerState extends State<HomeManager> {
                     Icons.assessment,
                     Colors.teal,
                     () {
-                      // Navigate to reports
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Laporan')),
                       );
