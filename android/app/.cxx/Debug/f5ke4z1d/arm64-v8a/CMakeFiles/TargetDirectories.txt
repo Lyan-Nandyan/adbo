@@ -1,0 +1,2 @@
+C:/Users/ad/OneDrive/Dokumen/ad/semester 6/adbo/projek-sistem/adbo/android/app/.cxx/Debug/f5ke4z1d/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/ad/OneDrive/Dokumen/ad/semester 6/adbo/projek-sistem/adbo/android/app/.cxx/Debug/f5ke4z1d/arm64-v8a/CMakeFiles/rebuild_cache.dir
