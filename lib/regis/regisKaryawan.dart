@@ -51,7 +51,7 @@ class _RegisKaryawanState extends State<RegisKaryawan>
     int key = await box.add(Karyawan(
       nama: username,
       password: password,
-      jabatan: "Karyawan",
+      jabatan: "karyawan",
       cuti: "0",
     ));
     Karyawan? newKaryawan = box.get(key);

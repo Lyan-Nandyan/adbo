@@ -50,7 +50,7 @@ class _RegishrdState extends State<Regishrd>
     int key = await box.add(Hrd(
         nama: username,
         password: password,
-        jabatan: "HRD",
+        jabatan: "hrd",
         email: email)); 
     Hrd? newHrd = box.get(key);
     if (newHrd != null) {
